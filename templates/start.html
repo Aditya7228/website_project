@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Enter Match Score</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f3f6fb;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px
+        }
+
+        .box {
+            width: 720px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(2, 6, 23, 0.08)
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: 600;
+            color: #0f172a
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 6px;
+            border: 1px solid #e6eef7;
+            border-radius: 6px;
+            font-size: 14px
+        }
+
+        .row {
+            display: flex;
+            gap: 8px
+        }
+
+        .row .col {
+            flex: 1
+        }
+
+        .small {
+            font-size: 13px;
+            color: #64748b
+        }
+
+        button {
+            margin-top: 12px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 0;
+            background: #0b3d91;
+            color: white;
+            font-weight: 700;
+            cursor: pointer
+        }
+
+        .result {
+            margin-top: 12px;
+            background: #f8fafc;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px dashed #e6eef7
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <h2>Enter Match / Team Scores (Detailed)</h2>
+
+        <form method="post" action="/submit">
+            <label>Match Title (optional)</label>
+            <input name="match_title" type="text" placeholder="e.g., Local Cup Final — Team A vs Team B" />
+
+            <div style="display:flex; gap:12px;">
+                <div style="flex:1">
+                    <label>Team 1 name</label>
+                    <input name="team1" type="text" required placeholder="Team 1" />
+                </div>
+                <div style="flex:1">
+                    <label>Team 2 name</label>
+                    <input name="team2" type="text" required placeholder="Team 2" />
+                </div>
+            </div>
+
+            <div class="row" style="margin-top:8px;">
+                <div class="col">
+                    <label>Team 1 runs</label>
+                    <input name="team1_runs" type="number" min="0" required placeholder="e.g., 220" />
+                </div>
+                <div class="col">
+                    <label>Team 1 wickets</label>
+                    <input name="team1_wk" type="number" min="0" max="10" required placeholder="e.g., 8" />
+                </div>
+                <div class="col">
+                    <label>Team 1 overs</label>
+                    <input name="team1_overs" type="text" placeholder="e.g., 45.2" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <label>Team 2 runs</label>
+                    <input name="team2_runs" type="number" min="0" required placeholder="e.g., 198" />
+                </div>
+                <div class="col">
+                    <label>Team 2 wickets</label>
+                    <input name="team2_wk" type="number" min="0" max="10" required placeholder="e.g., 10" />
+                </div>
+                <div class="col">
+                    <label>Team 2 overs</label>
+                    <input name="team2_overs" type="text" placeholder="e.g., 42.0" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <label>Top scorer (optional)</label>
+                    <input name="top_scorer" type="text" placeholder="Name (Team - runs) e.g., Rohit (Team1 - 85)" />
+                </div>
+                <div class="col">
+                    <label>Best bowler (optional)</label>
+                    <input name="best_bowler" type="text" placeholder="Name and figures e.g., Bumrah 4-35" />
+                </div>
+            </div>
+
+            <label>Extras (optional)</label>
+            <input name="extras" type="text" placeholder="e.g., 12 (wides 3, no-balls 2, byes 7)" />
+
+            <label>Notes (optional)</label>
+            <textarea name="notes" rows="3" placeholder="Any important note like result summary..."></textarea>
+
+            <button type="submit">Save Scoreboard (append)</button>
+        </form>
+
+        {% if saved %}
+        <div class="result">
+            <strong>Saved!</strong><br>
+            {{ saved }}
+        </div>
+        {% endif %}
+
+        <p class="small">Saved scoreboards are appended to <code>scoreboard.txt</code>.</p>
+        <div style="margin-top:8px;">
+            <a href="/" style="color:#0b3d91;text-decoration:none">Back Home</a>
+            &nbsp;|&nbsp;
+            <a href="/scores" style="color:#64748b;text-decoration:none">View all</a>
+        </div>
+    </div>
+</body>
+
+</html>
